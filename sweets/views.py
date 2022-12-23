@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import Sweets
 
-# Create your views here.
+def index(request):
+    sweets = Sweets.objects.all()
+    return render (request, 'home.html', {'sweets': sweets})
