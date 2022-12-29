@@ -418,3 +418,13 @@ Read port: 64556
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jesse\\AppData\\Local\\Temp\\rust_mozprofileF3lISQ\\search.json.mozlz4", (void 0)))
 DevTools listening on ws://127.0.0.1:64547/devtools/browser/f3b03823-f693-4a86-8a3d-2d45158045d9
 1671805506558	Marionette	INFO	Stopped listening on port 64556
+1671805975482	geckodriver	INFO	Listening on 127.0.0.1:64672
+1671805978542	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "64673" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\jesse\\AppData\\Local\\Temp\\rust_mozprofilexrRAV1"
+1671805978827	Marionette	INFO	Marionette enabled
+1671805978832	Marionette	INFO	Listening on port 64682
+Read port: 64682
+WebDriver BiDi listening on ws://127.0.0.1:64673
+1671805978916	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jesse\\AppData\\Local\\Temp\\rust_mozprofilexrRAV1\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:64673/devtools/browser/075093eb-561b-428e-acf0-e781b2830c28
+1671805980273	Marionette	INFO	Stopped listening on port 64682

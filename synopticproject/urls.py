@@ -22,6 +22,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', sweetViews.index, name='index'),
+    path('cart_detail/',sweetViews.cart_detail,name='cart_detail'),
+    path('cart_add/<int:id>', sweetViews.cart_add, name='cart_add'),
 ]
 
 # URL for media 
