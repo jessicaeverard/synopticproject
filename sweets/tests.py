@@ -30,6 +30,14 @@ class GeneralTestCase(TestCase):
         # self.assertIn ('Kola Kubes',self.browser.page_source)
         # self.assertIn ('Rhubard & Custard',self.browser.page_source)
 
+    def test_add_to_cart(self):
+        quantity = self.browser.find_element('css selector','textarea')
+        quantity.send_keys('10')
+        self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
+        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        self.browser.find_element('xpath', "//p[contains(., 'name Rhubard & Custard')]")
+        self.assertIn ('10',self.browser.page_source)
+
     def tearDown(self):
         """
         Shuts down the browser

@@ -25,7 +25,26 @@
             {% endfor %}
           </div>
    
-         {{ total }}
+        <h1>Total price: £{{ total|floatformat:2 }}</h1>
+        <h1>Total weight: {{ weight }} grams</h1>
+
+        {% if pandp %}
+        <p > p and p 
+          {{ pandp }}
+        </p>
+        {% endif %}
+
+        {% if final_total %}
+        <p > final total
+          {{ final_total }}
+        </p>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert alert-danger mt-3" role="alert">
+          {{ error }}
+        </div>
+        {% endif %}
           
     </body>
 

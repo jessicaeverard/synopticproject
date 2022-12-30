@@ -28,6 +28,19 @@ def cart_add(request, id):
 def cart_detail(request):
     whole_cart = Cart.objects.all()
     whole_total = Cart.objects.aggregate(Sum('price'))
+    whole_weight = Cart.objects.aggregate(Sum('quantityInGrams'))
     total = (whole_total['price__sum'])
-        #return render(request, 'cart_detail.html', {'whole_cart': whole_cart}, whole_total)
-    return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total})
+    weight = (whole_weight['quantityInGrams__sum'])
+    if weight > 501:
+        pandp = 2.50
+        final_total = (pandp+total)
+        return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
+    elif weight > 251 and weight < 500:
+        pandp = 2.00
+        final_total = (pandp+total)
+        return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
+    elif weight > 40 and weight < 250:
+        pandp = 1.50
+        final_total = (pandp+total)
+        return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
+    return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'error': 'minimum weight not met'})
