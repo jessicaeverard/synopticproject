@@ -24,6 +24,7 @@ urlpatterns = [
     path('', sweetViews.index, name='index'),
     path('cart_detail/',sweetViews.cart_detail,name='cart_detail'),
     path('cart_add/<int:id>', sweetViews.cart_add, name='cart_add'),
+    path('cart_detail/delete_item/<int:id>', sweetViews.delete_item, name='delete_item'),
 ]
 
 # URL for media 

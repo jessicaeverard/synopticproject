@@ -44,3 +44,9 @@ def cart_detail(request):
         final_total = (pandp+total)
         return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
     return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'error': 'minimum weight not met'})
+
+
+def delete_item(request, id):
+     item = Cart.objects.get(id=id)
+     item.delete()
+     return HttpResponseRedirect(reverse('cart_detail'))
