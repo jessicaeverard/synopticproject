@@ -11,6 +11,7 @@
     </head>
 
     <body>
+      <a href="{% url 'index' %}">Go back home</a>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for cart in whole_cart %}
             <div v-for="sweet in sweets" class="col">
@@ -26,8 +27,11 @@
             {% endfor %}
           </div>
    
+      {% if total and weight %}  
         <h1>Total price: £{{ total|floatformat:2 }}</h1>
         <h1>Total weight: {{ weight }} grams</h1>
+
+      {% endif %}
 
         {% if pandp %}
         <p > p and p 
@@ -42,10 +46,11 @@
         {% endif %}
 
         {% if error %}
-        <div class="alert alert-danger mt-3" role="alert">
+        <div class="alert alert-danger mt-3" role="alert" >
           {{ error }}
         </div>
         {% endif %}
+
           
     </body>
 
