@@ -4,6 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from django.contrib.auth.models import User
 import time
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 
 class GeneralTestCase(TestCase):
     testing_url = 'http://localhost:8000/'
@@ -37,11 +41,14 @@ class GeneralTestCase(TestCase):
         
         """
         quantity = self.browser.find_element('id','id_quantityInGrams')
-        quantity.send_keys('10')
+        quantity.send_keys('40')
         self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
+        WebDriverWait(self.browser, 20).until(EC.alert_is_present())
+        alert = self.browser.switch_to.alert
+        alert.accept()
         self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
         self.browser.find_element('xpath', "//p[contains(., 'name Rhubard & Custard')]")
-        self.assertIn ('10',self.browser.page_source)
+        self.assertIn ('40',self.browser.page_source)
 
     def test_delete_item_from_cart(self):
         """
@@ -56,6 +63,16 @@ class GeneralTestCase(TestCase):
         except NoSuchElementException:
             return False
         return True
+
+    def test_add_gift_wrap(self):
+        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        self.browser.find_element('id','id_option').click()
+        message = self.browser.find_element('id','id_message')
+        message.send_keys('hi')
+        self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
+        self.browser.find_element('xpath', "//h1[contains(., ' Gift wrapping:')]")
+        self.assertIn ('1',self.browser.page_source)
+
 
     def tearDown(self):
         """
