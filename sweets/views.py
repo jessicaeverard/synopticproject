@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Sweets, Cart
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import CartForm
+from .forms import CartForm, GiftWrapForm
 from decimal import Decimal
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -35,15 +35,63 @@ def cart_detail(request):
         if weight > 501:
             pandp = 2.50
             final_total = (pandp+total)
-            return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
+            if request.method == 'POST': #method is post as we are inputting data
+                gift = 1
+                final_total = (pandp+total+gift)
+                context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'gift': gift}
+                return render(request, 'cart_detail.html', context)
+            context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'form': GiftWrapForm}         
+            return render(request, 'cart_detail.html', context)
         elif weight > 251 and weight < 500:
             pandp = 2.00
             final_total = (pandp+total)
-            return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
-        elif weight > 40 and weight < 250:
+            if request.method == 'POST': #method is post as we are inputting data
+                gift = 1
+                final_total = (pandp+total+gift)
+                context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'gift': gift}
+                return render(request, 'cart_detail.html', context)
+            context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'form': GiftWrapForm}
+            return render(request, 'cart_detail.html', context)      
+        elif weight > 39 and weight < 250:
             pandp = 1.50
             final_total = (pandp+total)
-            return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'total': total, 'weight': weight, 'pandp': pandp, 'final_total':final_total})
+            if request.method == 'POST': #method is post as we are inputting data
+                gift = 1
+                final_total = (pandp+total+gift)
+                context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'gift': gift}
+                return render(request, 'cart_detail.html', context)
+            context = {'whole_cart': whole_cart, 
+                            'total': total, 
+                            'weight': weight, 
+                            'pandp': pandp, 
+                            'final_total':final_total,
+                            'form': GiftWrapForm}
+            return render(request, 'cart_detail.html', context)
     except:
         return render(request, 'cart_detail.html', {'error': 'no items in your cart'})
     return render(request, 'cart_detail.html', {'whole_cart': whole_cart, 'error': 'minimum weight not met'})

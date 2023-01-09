@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, NumberInput
 from .models import Cart
 from django import forms
 
@@ -11,7 +11,16 @@ class CartForm(ModelForm):
 
     class Meta:
         model = Cart
-        fields = ['quantityInGrams']    
+        fields = ['quantityInGrams']  
+        labels = {
+            'quantityInGrams': ('Quantity in Grams')
+        }  
         widgets = {
-            'quantityInGrams': Textarea(attrs={'rows': 1}),
+            'quantityInGrams': NumberInput(attrs={'rows': 1}),
         }
+
+
+class GiftWrapForm(forms.Form):
+    option = forms.BooleanField(required=True, label="Add gift wrapping for £1?")
+    message = forms.CharField(max_length=200,widget=forms.Textarea(attrs={"rows":"2"}))
+ 

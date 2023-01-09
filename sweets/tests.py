@@ -16,27 +16,27 @@ class GeneralTestCase(TestCase):
         self.browser.get(self.testing_url)
 
     
-    # def test_there_are_sweets(self):
-    #     """
-    #     Checks to see if all of the sweets appear 
+    def test_there_are_sweets(self):
+        """
+        Checks to see if all of the sweets appear 
 
-    #     In order for it to work, all but one must be commentted - create 7 different tests
+        In order for it to work, all but one must be commentted - create 7 different tests
 
-    #     """
-    #     #self.assertIn ('Fruit BonBons',self.browser.page_source)
-    #     #self.assertIn ('Everton Mints',self.browser.page_source)
-    #     self.assertIn ('Aniseed Twists',self.browser.page_source)
-    #     # self.assertIn ('Chocolate Limes',self.browser.page_source)
-    #     # self.assertIn ('Pear Drops',self.browser.page_source)
-    #     # self.assertIn ('Kola Kubes',self.browser.page_source)
-    #     # self.assertIn ('Rhubard & Custard',self.browser.page_source)
+        """
+        #self.assertIn ('Fruit BonBons',self.browser.page_source)
+        #self.assertIn ('Everton Mints',self.browser.page_source)
+        self.assertIn ('Aniseed Twists',self.browser.page_source)
+        # self.assertIn ('Chocolate Limes',self.browser.page_source)
+        # self.assertIn ('Pear Drops',self.browser.page_source)
+        # self.assertIn ('Kola Kubes',self.browser.page_source)
+        # self.assertIn ('Rhubard & Custard',self.browser.page_source)
 
     def test_add_to_cart(self):
         """
         Test to see if a user can add item to cart and that it appears on the cart details page.
         
         """
-        quantity = self.browser.find_element('css selector','textarea')
+        quantity = self.browser.find_element('id','id_quantityInGrams')
         quantity.send_keys('10')
         self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
         self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()

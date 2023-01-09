@@ -11,7 +11,38 @@
     </head>
 
     <body>
-      <a href="{% url 'cart_detail' %}">Go To Cart</a>
+
+    <style type="text/css">
+
+    .card{
+      width: 350px;
+      height: 550px;
+    }
+    
+    h1{
+      margin: 20px;
+    }
+
+    </style>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand" >Sweet shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'cart_detail' %}">
+                  Go To Cart
+                </a>
+            </div>
+        </div>
+        </div>
+      </nav>
+
+      <center> <h1> Sweet Shop</h1>
+        
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for sweet in sweets %}
             <div v-for="sweet in sweets" class="col">
@@ -19,10 +50,10 @@
                 <img class="card-img-top" src="{{ sweet.image.url }}" />
                 <div class="card-body">
                   <p class="card-text">{{ sweet.name }}</p>
-                  <form method="POST" style="width:500px;">
+                  <form method="POST" >
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary" formaction="cart_add/{{ sweet.id }}">
+                    <button type="submit" class="btn btn-primary" formaction="cart_add/{{ sweet.id }}" onclick="addedToCart()">
                       Add to cart
                     </button>
                   </form>
@@ -31,6 +62,14 @@
             </div>
             {% endfor %}
           </div>
+      </center>
+
+      <script>
+        function addedToCart() {
+          alert("Added to cart");
+        }
+        </script>
+
     </body>
 
 </html>
