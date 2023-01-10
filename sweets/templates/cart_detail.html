@@ -27,61 +27,75 @@
         </div>
       </nav>
       <center>
-        <h1>Order summary</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for cart in whole_cart %}
-            <div v-for="sweet in sweets" class="col">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-text">name {{ cart.name }}</p>
-                  <p class="card-text">total price {{ cart.price }}</p>
-                  <p class="card-text">quan in gram{{ cart.quantityInGrams }}</p>
-                  <a class="btn btn-danger"href="delete_item/{{ cart.id }}">Delete</a>
+        <h1 style="padding: 30px;">Order summary</h1>
+        
+        <div class="container text-center">
+          <div class="row row-cols-2">
+            <div class="col">
+              <div class="row row-cols-1 row-cols-md-3 g-4" style="flex-flow: column;">
+                {% for cart in whole_cart %}
+                <div v-for="sweet in sweets" class="col" >
+                  <div class="card" style="width: 400px;">
+                    <div class="card-body">
+                      <p class="card-text">Name: {{ cart.name }}</p>
+                      <p class="card-text">Price: £{{ cart.price }}</p>
+                      <p class="card-text">Quantity: {{ cart.quantityInGrams }} grams </p>
+                      <a class="btn btn-danger"href="delete_item/{{ cart.id }}">Delete</a>
+                    </div>
+                  </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            {% endfor %}
-          </div>
 
-   
+
+            <div class="col">
+                
       {% if total and weight %}  
 
-          <form method="POST" >
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary" formaction="">
-              Add to cart
-            </button>
-          </form>
+      <form method="POST" style="padding-bottom: 30px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" formaction="" >
+          Add to cart
+        </button>
+      </form>
 
-        <h3>Total price: £{{ total|floatformat:2 }}</h3>
-        <h3>Total weight: {{ weight }} grams</h3>
+        <h4>Total price: £{{ total|floatformat:2 }}</h4>
+        <h4>Total weight: {{ weight }} grams</h4>
 
       {% endif %}
 
-        {% if pandp %}
-        <h3 > p and p 
-          {{ pandp }}
-        </h3>
-        {% endif %}
+    {% if pandp %}
+    <h4 > Posting and packaging:
+      £{{ pandp }}
+    </h4>
+    {% endif %}
 
-        {% if gift %}
-        <h1 > Gift wrapping:
-          {{ gift }}
-        </h1>
-        {% endif %}
+    {% if gift %}
+    <h4 > Gift wrapping:
+      £{{ gift }}
+    </h4>
+    {% endif %}
 
-        {% if final_total %}
-        <h1 > final total
-          {{ final_total|floatformat:2 }}
-        </h1>
-        {% endif %}
+    {% if final_total %}
+    <h1 style="padding-top: 30px;"> Final total:
+      £{{ final_total|floatformat:2 }}
+    </h1>
+    {% endif %}
 
-        {% if error %}
-        <div class="alert alert-danger mt-3" role="alert" >
-          {{ error }}
+    {% if error %}
+    <center>
+    <div class="alert alert-danger mt-3" role="alert" style="width: 400px;" >
+      {{ error }}
+    </div>
+    </center>
+    {% endif %}
+            </div>
+            
+          </div>
         </div>
-        {% endif %}
+       
  
     </center>  
 
