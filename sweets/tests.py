@@ -47,7 +47,7 @@ class GeneralTestCase(TestCase):
         alert = self.browser.switch_to.alert
         alert.accept()
         self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('xpath', "//p[contains(., 'name Rhubard & Custard')]")
+        self.browser.find_element('xpath', "//p[contains(., 'Rhubard & Custard')]")
         self.assertIn ('40',self.browser.page_source)
 
     def test_delete_item_from_cart(self):
@@ -70,8 +70,34 @@ class GeneralTestCase(TestCase):
         message = self.browser.find_element('id','id_message')
         message.send_keys('hi')
         self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
-        self.browser.find_element('xpath', "//h1[contains(., ' Gift wrapping:')]")
+        self.browser.find_element('xpath', "//h4[contains(., ' Gift wrapping:')]")
         self.assertIn ('1',self.browser.page_source)
+
+    def test_there_is_cart_details(self):
+        """
+        Checks to see if there is a cart details page
+
+        """
+        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        self.assertIn ('Order summary',self.browser.page_source)
+
+    def test_correct_total(self):
+        """
+        Final total after adding a gift wrapping.
+
+        If testing without gift wrapping then comment out gift wrapping test.
+        
+        """
+        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        self.browser.find_element('xpath', "//h1[contains(., 'Final total:')]")
+        time.sleep(5)
+        self.assertIn ('2.30',self.browser.page_source)
+
+    def test_correct_pandp(self):
+        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        self.browser.find_element('xpath', "//h4[contains(., 'Posting and packaging:')]")
+        self.assertIn ('£1.5',self.browser.page_source)
+
 
 
     def tearDown(self):
