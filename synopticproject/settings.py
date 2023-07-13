@@ -26,8 +26,9 @@ SECRET_KEY = 'django-insecure-@3iht*sv7&=z@&ae*j5b9r&5idsb3ehu)dnnmlf)tlo#m67fej
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://synopticproject-production.up.railway.app"]
 
+CSRF_TRUSTED_ORIGINS = ["https://synopticproject-production.up.railway.app"]
 
 # Application definition
 
