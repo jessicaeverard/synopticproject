@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@3iht*sv7&=z@&ae*j5b9r&5idsb3ehu)dnnmlf)tlo#m67fej'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["synopticproject-production.up.railway.app", '127.0.0.1']
 
