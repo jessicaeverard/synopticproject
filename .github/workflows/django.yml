@@ -10,25 +10,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
       matrix:
         python-version: ['3.10']
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install Firefox and Geckodriver
+    - name: Install Firefox (ESR) + Geckodriver
       run: |
         sudo apt-get update
-        sudo apt-get install firefox -y  # Install Firefox
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz  # Download Geckodriver
-        tar -xvzf geckodriver-v0.30.0-linux64.tar.gz  # Extract Geckodriver
-        sudo mv geckodriver /usr/local/bin/  # Move Geckodriver to a directory in the PATH
+        sudo apt-get install -y firefox-esr  # REAL Firefox Selenium can use
+
+        # Install Geckodriver (latest release)
+        GECKO_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep tag_name | cut -d '"' -f 4)
+        wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_VERSION/geckodriver-$GECKO_VERSION-linux64.tar.gz
+        tar -xf geckodriver-*-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/
+        geckodriver --version
+        firefox-esr --version
 
     - name: Install Dependencies
       run: |
@@ -36,5 +40,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Tests
+      env:
+        MOZ_HEADLESS: 1  # Force Firefox to headless mode
       run: |
         python manage.py test
