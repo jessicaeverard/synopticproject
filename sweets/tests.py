@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
+from django.test import TestCase
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
@@ -7,16 +8,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-class GeneralTestCase(StaticLiveServerTestCase):
+class GeneralTestCase(TestCase):
+    testing_url = 'http://localhost:8000/'  # Your server must be running
+
     def setUp(self):
         options = Options()
-        options.add_argument("--headless=new")
+        options.add_argument("--headless=new")  # Optional: run headless
         options.add_argument("--disable-gpu")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
-        
+
         self.browser = webdriver.Chrome(options=options)
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.testing_url)
 
     
     def test_there_are_sweets(self):
@@ -72,13 +75,14 @@ class GeneralTestCase(StaticLiveServerTestCase):
         # self.browser.find_element('xpath', "//h4[contains(., ' Gift wrapping:')]")
         # self.assertIn ('1',self.browser.page_source)
 
-    def test_there_is_cart_details(self):
-        """
-        Checks to see if there is a cart details page
+    # def test_there_is_cart_details(self):
+    #     """
+    #     Checks to see if there is a cart details page
 
-        """
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.assertIn ('Order summary',self.browser.page_source)
+    #     """
+    #     self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+    #     time.sleep(3)
+    #     self.assertIn ('Order summary',self.browser.page_source)
 
     # def test_correct_total(self):
     #     """

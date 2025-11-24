@@ -1,37 +1,27 @@
-name: Django CI
-
+name: Run Django Tests
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-
+    branches: [main]
 jobs:
-  build:
+  test-django-app:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install Chrome + ChromeDriver
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-        chromium-browser --version
-        chromedriver --version
-
-    - name: Install Python dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run Tests
-      env:
-        SELENIUM_BROWSER: chrome
-      run: |
-        python manage.py test
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Run Django test
+        run: |
+          cd project
+          python manage.py test
