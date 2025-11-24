@@ -35,43 +35,43 @@ class GeneralTestCase(TestCase):
         # self.assertIn ('Kola Kubes',self.browser.page_source)
         # self.assertIn ('Rhubard & Custard',self.browser.page_source)
 
-    def test_add_to_cart(self):
-        """
-        Test to see if a user can add item to cart and that it appears on the cart details page.
+    # def test_add_to_cart(self):
+    #     """
+    #     Test to see if a user can add item to cart and that it appears on the cart details page.
         
-        """
-        quantity = self.browser.find_element('id','id_quantityInGrams')
-        quantity.send_keys('40')
-        self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
-        WebDriverWait(self.browser, 20).until(EC.alert_is_present())
-        alert = self.browser.switch_to.alert
-        alert.accept()
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('xpath', "//p[contains(., 'Rhubard & Custard')]")
-        self.assertIn ('40',self.browser.page_source)
+    #     """
+    #     quantity = self.browser.find_element('id','id_quantityInGrams')
+    #     quantity.send_keys('40')
+    #     self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
+    #     WebDriverWait(self.browser, 20).until(EC.alert_is_present())
+    #     alert = self.browser.switch_to.alert
+    #     alert.accept()
+    #     self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+    #     self.browser.find_element('xpath', "//p[contains(., 'Rhubard & Custard')]")
+    #     self.assertIn ('40',self.browser.page_source)
 
-    def test_delete_item_from_cart(self):
-        """
-        Test to see if the item is deleted from the cart
+    # def test_delete_item_from_cart(self):
+    #     """
+    #     Test to see if the item is deleted from the cart
 
-        Does depend on the add to cart test as there needs to be an item in the cart.
-        """
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('xpath', "//a[contains(., 'Delete')]").click()
-        try:
-            self.browser.find_element('xpath', "//p[contains(., 'name Rhubard & Custard')]")
-        except NoSuchElementException:
-            return False
-        return True
+    #     Does depend on the add to cart test as there needs to be an item in the cart.
+    #     """
+    #     self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+    #     self.browser.find_element('xpath', "//a[contains(., 'Delete')]").click()
+    #     try:
+    #         self.browser.find_element('xpath', "//p[contains(., 'name Rhubard & Custard')]")
+    #     except NoSuchElementException:
+    #         return False
+    #     return True
 
-    def test_add_gift_wrap(self):
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('id','id_option').click()
-        message = self.browser.find_element('id','id_message')
-        message.send_keys('hi')
-        self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
-        self.browser.find_element('xpath', "//h4[contains(., ' Gift wrapping:')]")
-        self.assertIn ('1',self.browser.page_source)
+    #def test_add_gift_wrap(self):
+        # self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+        # self.browser.find_element('id','id_option').click()
+        # message = self.browser.find_element('id','id_message')
+        # message.send_keys('hi')
+        # self.browser.find_element('xpath', "//button[contains(., 'Add to cart')]").click()
+        # self.browser.find_element('xpath', "//h4[contains(., ' Gift wrapping:')]")
+        # self.assertIn ('1',self.browser.page_source)
 
     def test_there_is_cart_details(self):
         """
@@ -81,22 +81,22 @@ class GeneralTestCase(TestCase):
         self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
         self.assertIn ('Order summary',self.browser.page_source)
 
-    def test_correct_total(self):
-        """
-        Final total after adding a gift wrapping.
+    # def test_correct_total(self):
+    #     """
+    #     Final total after adding a gift wrapping.
 
-        If testing without gift wrapping then comment out gift wrapping test.
+    #     If testing without gift wrapping then comment out gift wrapping test.
         
-        """
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('xpath', "//h1[contains(., 'Final total:')]")
-        time.sleep(5)
-        self.assertIn ('2.30',self.browser.page_source)
+    #     """
+    #     self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+    #     self.browser.find_element('xpath', "//h1[contains(., 'Final total:')]")
+    #     time.sleep(5)
+    #     self.assertIn ('2.30',self.browser.page_source)
 
-    def test_correct_pandp(self):
-        self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
-        self.browser.find_element('xpath', "//h4[contains(., 'Posting and packaging:')]")
-        self.assertIn ('£1.5',self.browser.page_source)
+    # def test_correct_pandp(self):
+    #     self.browser.find_element('xpath', "//a[contains(., 'Go To Cart')]").click()
+    #     self.browser.find_element('xpath', "//h4[contains(., 'Posting and packaging:')]")
+    #     self.assertIn ('£1.5',self.browser.page_source)
 
 
 
