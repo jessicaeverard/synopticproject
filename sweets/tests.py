@@ -9,18 +9,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.firefox.options import Options
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
-class GeneralTestCase(TestCase):
-    testing_url = 'http://localhost:8000/'
-
+class GeneralTestCase(StaticLiveServerTestCase):
     def setUp(self):
-        """
-        Sets up the webpage - be sure to have server running
-        """
         options = Options()
-        options.headless = True  # run in headless mode
+        options.headless = True
         self.browser = webdriver.Firefox(options=options)
-        self.browser.get(self.testing_url)
+        self.browser.get(self.live_server_url)
+
 
     
     def test_there_are_sweets(self):
