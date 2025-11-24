@@ -1,23 +1,22 @@
-from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from django.contrib.auth.models import User
-import time
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.firefox.options import Options
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
 class GeneralTestCase(StaticLiveServerTestCase):
     def setUp(self):
         options = Options()
-        options.headless = True
-        self.browser = webdriver.Firefox(options=options)
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        
+        self.browser = webdriver.Chrome(options=options)
         self.browser.get(self.live_server_url)
-
 
     
     def test_there_are_sweets(self):
