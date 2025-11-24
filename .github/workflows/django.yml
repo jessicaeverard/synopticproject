@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -17,14 +16,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Install Firefox and Geckodriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install firefox -y  # Install Firefox
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz  # Download Geckodriver
+        tar -xvzf geckodriver-v0.30.0-linux64.tar.gz  # Extract Geckodriver
+        sudo mv geckodriver /usr/local/bin/  # Move Geckodriver to a directory in the PATH
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
     - name: Run Tests
       run: |
         python manage.py test
