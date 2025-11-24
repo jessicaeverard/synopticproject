@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.firefox.options import Options
 
 class GeneralTestCase(TestCase):
     testing_url = 'http://localhost:8000/'
@@ -16,7 +17,9 @@ class GeneralTestCase(TestCase):
         """
         Sets up the webpage - be sure to have server running
         """
-        self.browser = webdriver.Firefox()
+        options = Options()
+        options.headless = True  # run in headless mode
+        self.browser = webdriver.Firefox(options=options)
         self.browser.get(self.testing_url)
 
     
